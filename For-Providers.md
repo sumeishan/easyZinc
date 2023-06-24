@@ -6,7 +6,7 @@
 
 ## Zinc Supplementation 
 
-...python 
+```{python}
 
 import tkinter
 from tkinter import ttk
@@ -26,4 +26,4 @@ root.geometry('200x100')
 root.minsize(150, 50)
 root.mainloop()
 
-...
+```
