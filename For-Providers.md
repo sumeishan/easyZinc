@@ -7,23 +7,20 @@
 ## Zinc Supplementation 
 
 ```{python}
-
 import tkinter
 from tkinter import ttk
+
+
+def print_hello():
+    print("hello")
 
 
 root = tkinter.Tk()
 big_frame = ttk.Frame(root)
 big_frame.pack(fill='both', expand=True)
 
-label = ttk.Label(big_frame, text="This is a button test.")
-label.pack()
-button = ttk.Button(big_frame, text="Click me!")
+button = ttk.Button(big_frame, text="Print hello", command=print_hello)
 button.pack()
-
-root.title("Button Test")
-root.geometry('200x100')
-root.minsize(150, 50)
 root.mainloop()
 
 ```
