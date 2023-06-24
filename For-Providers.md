@@ -1,9 +1,3 @@
----
-layout: page
-title: "For Providers"
-permalink: https://sumeishan.github.io/for-providers
----
-
 # For Providers 
 
 ## Zinc Deficiency in IBD Patients 
@@ -12,3 +6,7 @@ permalink: https://sumeishan.github.io/for-providers
 
 ## Zinc Supplementation 
 
+...
+def function: 
+  return 5 
+...
