@@ -1,23 +1,20 @@
 /* Reset default margin and padding */
-body, h1, ul, li {
+body, h1, h2, h3, ul, li {
   margin: 0;
   padding: 0;
 }
 
 header {
-  background-color: #f2f2f2;
+  background-color: #223366;
   padding: 20px;
-  text-align: center;
-}
-
-h1 {
-  color: #333;
-  font-size: 20px;
+  text-align: left;
+  color: #fff;
 }
 
 nav ul {
   list-style-type: none;
   text-align: right;
+  margin-bottom: 10px;
 }
 
 nav ul li {
@@ -26,14 +23,21 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #333;
+  color: #fff;
   text-decoration: none;
   padding: 5px;
 }
 
-.content {
-  margin: 100px;
-  background-color: #fff;
+.calculator {
+  background-color: #223366;
+  color: #fff;
   padding: 20px;
-  border: 1px solid #ccc;
+}
+
+.calculator h3 {
+  margin-bottom: 10px;
+}
+
+.calculator p {
+  color: #fff;
 }
