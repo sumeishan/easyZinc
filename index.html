@@ -16,11 +16,63 @@
     <h1>easyZinc</h1>
     <h2>Research-Based Supplementation for Pediatric IBD Patients</h2>
   </header>
+</body>
 
   <div class="calculator">
     <h3>Pediatric Zinc Supplementation Dosage Calculator</h3>
-    <p>Calculator content goes here...</p>
-  </div>
+    
+<body>
+  <input type="text" id="input1" placeholder="Enter Weight in Pounds">
+  <br>
+  <input type="text" id="input2" placeholder="Enter Age in Years">
+  <br>
+  <button onclick="calculate()">Calculate</button>
 
+  <div id="result"></div>
+
+  <script>
+    function calculate_supplementation(weight_in_lbs, age_in_years) {
+      let recommended_dose = 0;
+      let recommended_duration = "";
+      let range = null;
+
+      let weight_in_kg = weight_in_lbs * 0.45359237;
+
+      if (age_in_years < 5) {
+        recommended_dose = 10;
+        recommended_duration = "14 days";
+      } else if (age_in_years < 13) {
+        recommended_dose = Math.round(weight_in_kg / 10) * 10;
+        recommended_duration = "4 to 6 weeks";
+        range = [
+          Math.round(weight_in_kg / 10) * 10,
+          Math.round(weight_in_kg * 2 / 10) * 10
+        ];
+      } else {
+        recommended_dose = 30;
+        recommended_duration = "1 to 2 weeks";
+        range = [
+          Math.round(weight_in_kg * 2 / 10) * 10,
+          Math.round(weight_in_kg * 3 / 10) * 10
+        ];
+      }
+
+      return [recommended_dose, recommended_duration, range];
+    }
+
+    function calculate() {
+      // Get the values from the input boxes
+      var value1 = parseInt(document.getElementById("input1").value);
+      var value2 = parseInt(document.getElementById("input2").value);
+
+      // Perform the calculation
+      var [recommended_dose, recommended_duration] = calculate_supplementation(value1, value2);
+
+      // Display the result
+      var resultDiv = document.getElementById("result");
+      resultDiv.textContent = "Recommended Dosage: " + recommended_dose + " mg per day" + "\n Recommended Duration: " + recommended_duration;
+    }
+  </script>
 </body>
+  </div>
 </html>
