@@ -2,33 +2,59 @@
 <html>
 <head>
   <title>easyZinc</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="#">About</a></li>
-        <li><a href="#">For Providers</a></li>
-        <li><a href="#">For Patients</a></li>
-      </ul>
-    </nav>
-    <h1>easyZinc</h1>
-    <h2>Research-Based Supplementation for Pediatric IBD Patients</h2>
-  </header>
-</body>
+  <div class="top-section">
+    <header>
+      <nav>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">For Providers</a></li>
+          <li><a href="#">For Patients</a></li>
+        </ul>
+      </nav>
+      <h1>easyZinc</h1>
+      <h3>Research-Based Supplementation for Pediatric IBD Patients</h3>
+    </header>
+  </div>
 
   <div class="calculator">
     <h3>Pediatric Zinc Supplementation Dosage Calculator</h3>
-    
-<body>
-  <input type="text" id="input1" placeholder="Enter Weight in Pounds">
-  <br>
-  <input type="text" id="input2" placeholder="Enter Age in Years">
-  <br>
-  <button onclick="calculate()">Calculate</button>
+    <div class="input-section"> 
+      <br>
+      <p>
+      Enter Weight in Pounds
+      </p>
+      <input type="text" id="input1"> 
+      <p>
+      Enter Age in Years
+      </p>
+      <input type="text" id="input2">
+    </div>
+    <br>
+    <button onclick="calculate()">Calculate</button>
+    <br>  
+    <br> 
+    <div id="result"></div>
+  </div>
 
-  <div id="result"></div>
+  <style>
+    .top-section {
+      background-color: #223366;
+      color: white;
+      padding: 20px;
+    }
+
+    .calculator {
+      background-color: white;
+      color: black;
+      padding: 20px;
+      padding-left: 50px;
+      text-align: left;
+    }
+ 
+  </style>
 
   <script>
     function calculate_supplementation(weight_in_lbs, age_in_years) {
@@ -70,9 +96,9 @@
 
       // Display the result
       var resultDiv = document.getElementById("result");
-      resultDiv.textContent = "Recommended Dosage: " + recommended_dose + " mg per day" + "\n Recommended Duration: " + recommended_duration;
+      resultDiv.textContent = "Recommended Dosage: " + recommended_dose + " mg per day" + "\nRecommended Duration: " + recommended_duration;
     }
   </script>
+
 </body>
-  </div>
 </html>
