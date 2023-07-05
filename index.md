@@ -183,7 +183,6 @@
       var table = document.querySelector('table');
       table.style.display = 'table';
     }
-  </script>
-  </script>
+  </script> 
 </body>
 </html>
