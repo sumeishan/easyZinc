@@ -18,7 +18,7 @@
     </header>
   </div>
  
-  <div class="calculator">
+  <div class="top-section">
     <h1>Supplementation Calculator</h1>
     <div class="calculator">
       <label for="input1">Weight (lbs):</label>
@@ -81,9 +81,12 @@
       });
 
     // Function to calculate the number of measures and determine the appropriate measure word
-    function getNumberOfMeasures(first_value = 40, dosagePerMeasure, measure) {
+    function getNumberOfMeasures(first_value = 40, dpm) {
+      <!--   
       var { n: recommended_dose, duration: recommended_duration } = calculate_supplementation(first_value); // Fixed variable name
-      const dividend = Math.floor(recommended_dose / dosagePerMeasure); // Fixed variable name
+      -->
+      const n = 40
+      const dividend = Math.floor(n / dpm); // Fixed variable name
       return dividend;
     }
 
@@ -140,7 +143,7 @@
         const { url, measure, origDosage, perMeasure } = dictionaryObject[dosage];
 
         const row = document.createElement('tr');
-        const numberOfMeasures = getNumberOfMeasures(value1, perMeasure, measure);
+        const numberOfMeasures = getNumberOfMeasures(value1, dosage);
         const suggestedDosage = numberOfMeasures === 1 ? getMeasureSingular(measure) : getMeasurePlural(measure);
         const originalSuggestedServing = `${origDosage} mg for every ${perMeasure} ${measure}`;
 
@@ -157,6 +160,6 @@
       var table = document.querySelector('table');
       table.style.display = 'table';
     }
-  </script> 
+  </script>
 </body>
 </html>
