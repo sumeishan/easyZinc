@@ -80,32 +80,6 @@
         console.error('Error fetching CSV:', error);
       });
 
-    <script>
-    // Your JavaScript code
-    const dictionaryObject = {};
-
-    fetch('/Supplementation%20Spreadsheet%20-%20Sheet1.csv')
-      .then(response => response.text())
-      .then(data => {
-        const rows = data.split('\n').slice(1); // Remove header row
-
-        rows.forEach(row => {
-          const [url, origDosage, perMeasure, measure, dosagePerMeasure] = row.split(',');
-
-          dictionaryObject[dosagePerMeasure] = {
-            url: url,
-            measure: measure, 
-            origDosage: origDosage,
-            perMeasure: perMeasure
-          };
-        });
-
-        console.log('Dictionary object:', dictionaryObject);
-      })
-      .catch(error => {
-        console.error('Error fetching CSV:', error);
-      });
-
     // Function to calculate the number of measures and determine the appropriate measure word
     function getNumberOfMeasures(first_value = 40, dosagePerMeasure, measure) {
       var { n: recommended_dose, duration: recommended_duration } = calculate_supplementation(first_value); // Fixed variable name
