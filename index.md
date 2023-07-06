@@ -11,10 +11,9 @@
           <li><a href="#">About</a></li>
           <li><a href="#">For Providers</a></li>
           <li><a href="#">For Patients</a></li> 
-          <li><a href="https://github.com/sumeishan/zinc/blob/main/Current_Test_Results.md" target="_blank">Current Test Results</a></li>
-          
-        </ul>
-      </nav>
+          <li><a href="/current-test-results/">Current Test Results</a></li>
+  </ul>
+</nav>
       <h1>easyZinc</h1>
       <h3>Research-Based Supplementation for Pediatric IBD Patients</h3>
     </header>
