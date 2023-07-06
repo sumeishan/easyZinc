@@ -11,7 +11,7 @@
           <li><a href="#">About</a></li>
           <li><a href="#">For Providers</a></li>
           <li><a href="#">For Patients</a></li> 
-          <li><a href="/current-test-results/">Current Test Results</a></li>
+          <li><a href="zinc/current-test-results/">Current Test Results</a></li>
   </ul>
 </nav>
       <h1>easyZinc</h1>
