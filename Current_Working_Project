@@ -2,7 +2,7 @@
 layout: page
 title: Current Working Project
 description: Currently I am trying to webscrape from Walgreens zinc supplements. If possible, I'd like to use an OCR to scrape the serving size and corresponding zinc dosage using an OCR.
-permalink: /current-working_project/ 
+permalink: /current-working-project/ 
 ---
 
 
