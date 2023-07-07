@@ -1,24 +1,10 @@
+---
+layout: default
+title: easyZinc
+subtitle: Research-Based Supplementation for Pediatric IBD Patients
+---
+
 <html>
-<head>
-  <title>easyZinc</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-  <div class="top-section">
-    <header>
-      <nav>
-        <ul>
-          <li><a href="#">About</a></li>
-          <li><a href="#">For Providers</a></li>
-          <li><a href="#">For Patients</a></li> 
-          <li><a href="/current-test-results/">Current Test Results</a></li>
-  </ul>
-</nav>
-      <h1>easyZinc</h1>
-      <h3>Research-Based Supplementation for Pediatric IBD Patients</h3>
-    </header>
-  </div>
- 
   <div class="top-section">
     <h1>Supplementation Calculator</h1>
     <div class="calculator">
