@@ -148,5 +148,4 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
       table.style.display = 'table';
     }
   </script>
-</body>
 </html>
