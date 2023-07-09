@@ -4,9 +4,18 @@ title: easyZinc
 subtitle: Research-Based Supplementation for Pediatric IBD Patients
 ---
 
-
-<html>
-  <div class="top-section">
+<html> 
+  <style>
+    .red-dosage {
+      color: red;
+    }
+    .resized-image {
+      max-width: 100px;
+      max-height: 100px;
+    } 
+  </style> 
+<body>
+  <div class="Supplementation Calculator">
     <h1>Supplementation Calculator</h1>
     <div class="calculator">
       <label for="input1">Weight (lbs):</label>
@@ -32,9 +41,9 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
   <table style="display: none;"> <!-- Hide the table by default -->
     <thead>
       <tr>
-        <th>URL</th>
+        <th> Product </th>
         <th>Suggested Dosage</th>
-        <th>Original Suggested Serving Size</th>
+        <th> Distributor </th>
       </tr>
     </thead>
     <tbody id="table-body"> <!-- Added an id attribute -->
@@ -51,18 +60,26 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
       .then(data => {
         const rows = data.split('\n').slice(1); // Remove header row
 
+        console.log('Total items:', rows.length); // Display the total number of items
+
         rows.forEach(row => {
           const [distributor, name, url, origDosage, perMeasure, measure, dosagePerMeasure, image] = row.split(',');
 
-          dictionaryObject[dosagePerMeasure] = {
-            distributor: distributor, 
-            name: name, 
+          if (!dictionaryObject[dosagePerMeasure]) {
+            dictionaryObject[dosagePerMeasure] = []; // Create an empty array if it doesn't exist
+          }
+
+          dictionaryObject[dosagePerMeasure].push({
+            distributor: distributor,
+            name: name,
             url: url,
-            measure: measure, 
             origDosage: origDosage,
-            perMeasure: perMeasure, 
-            image: image
-          };
+            perMeasure: perMeasure,
+            measure: measure,
+            dosagePerMeasure: dosagePerMeasure,
+            image: image,
+            suggested: perMeasure
+          });
         });
 
         console.log('Dictionary object:', dictionaryObject);
@@ -71,26 +88,24 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
         console.error('Error fetching CSV:', error);
       });
 
+
     // Function to calculate the number of measures and determine the appropriate measure word
-    function getNumberOfMeasures(first_value = 40, dpm) {
-      <!--   
-      var { n: recommended_dose, duration: recommended_duration } = calculate_supplementation(first_value); // Fixed variable name
-      -->
-      const n = 40
-      const dividend = Math.floor(n / dpm); // Fixed variable name
+    function getNumberOfMeasures(first_value, dpm) { 
+      const dividend = Math.floor(first_value / dpm);
       return dividend;
     }
 
-    // Array of measure word pairs [singular, plural]
+    // Array of measure word pairs [singular, plural] 
     const measureWordPairs = [
       ['gummy', 'gummies'],
       ['capsule', 'capsules'],
       ['drop', 'drops'],
       ['tablet', 'tablets'],
-      ['spray', 'sprays'], 
-      ["lorenge", "lorenges"], 
-      ["caplet", "caplets"]
+      ['spray', 'sprays'],
+      ['lozenge', 'lozenges'],
+      ['caplet', 'caplets']
     ];
+
 
     // Function to get the singular version of the measure word
     function getMeasureSingular(measure) {
@@ -100,7 +115,7 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
 
     // Function to get the plural version of the measure word
     function getMeasurePlural(measure) {
-      const pair = measureWordPairs.find(([_ , plural]) => measure === plural);
+      const pair = measureWordPairs.find(([singular, _]) => measure === singular);
       return pair ? pair[1] : measure;
     }
 
@@ -128,22 +143,67 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
       resultDiv.innerHTML = "Recommended Dosage: " + recommended_dose + " mg per day" + "<br>Recommended Duration: " + recommended_duration;
 
       // Clear existing table rows
-      const tbody = document.getElementById('table-body'); // Use the id attribute set for tbody
+      const tbody = document.getElementById('table-body');
       tbody.innerHTML = '';
 
-      // Generate new table rows
+      // Update suggestedDosage in dictionaryObject and create an array of objects
+      const objects = [];
       for (const dosage in dictionaryObject) {
-        const { url, measure, origDosage, perMeasure } = dictionaryObject[dosage];
+        const dosageObjects = dictionaryObject[dosage]; // Retrieve the array of objects for the current dosagePerMeasure
+
+        for (const obj of dosageObjects) {
+          const { distributor, name, url, origDosage, perMeasure, measure, dosagePerMeasure, image, suggested } = obj;
+          const suggestedServingNumber = getNumberOfMeasures(recommended_dose, dosagePerMeasure);
+          const suggestedServingString = suggestedServingNumber === 1 ? getMeasureSingular(measure) : getMeasurePlural(measure);
+          const suggestedDosage = calculateTotalDosage(suggestedServingNumber, dosagePerMeasure);
+          const originalSuggestedServing = `${origDosage} mg for every ${perMeasure} ${measure}`;
+
+          obj.suggested = suggestedServingNumber; // Update the suggested property of the current object
+          
+          objects.push({
+            dosage,
+            distributor,
+            name,
+            url,
+            measure,
+            origDosage,
+            perMeasure,
+            image,
+            suggested,
+            suggestedServingNumber,
+            suggestedServingString,
+            suggestedDosage,
+            originalSuggestedServing
+          });
+        } // Missing closing brace for the inner for loop
+      } // Closing brace for the outer for loop
+
+      // Sort the objects based on the suggestedDosage
+      objects.sort((a, b) => {
+        const suggestedDosageA = parseFloat(a.suggestedServingNumber);
+        const suggestedDosageB = parseFloat(b.suggestedServingNumber);
+
+        if (suggestedDosageA === 0) return 1; // Place 0 dosage at the end
+        if (suggestedDosageB === 0) return -1; // Place 0 dosage at the end
+
+        return suggestedDosageA - suggestedDosageB;
+      });
+
+      // Generate new table rows
+      console.log("Length of objects:", objects.length);
+
+      for (const obj of objects) {
+        const { dosage, distributor, name, url, measure, origDosage, perMeasure, image, suggested, suggestedServingNumber, suggestedServingString, suggestedDosage, originalSuggestedServing } = obj;
 
         const row = document.createElement('tr');
-        const numberOfMeasures = getNumberOfMeasures(value1, dosage);
-        const suggestedDosage = numberOfMeasures === 1 ? getMeasureSingular(measure) : getMeasurePlural(measure);
-        const originalSuggestedServing = `${origDosage} mg for every ${perMeasure} ${measure}`;
+
+        // If suggestedDosage is 0, add a CSS class to color the cell red
+        const dosageClass = suggestedServingNumber === 0 ? 'red-dosage' : '';
 
         row.innerHTML = `
-          <td>${url}</td>
-          <td>${numberOfMeasures} ${suggestedDosage} (Total Intake: ${calculateTotalDosage(numberOfMeasures, dosage)} mg)</td>
-          <td>${originalSuggestedServing}</td>
+          <td><a href="${url}" target="_blank">${name}</a> <br> <a href="${url}" target="_blank"><img src="${image}" alt="${name}" class="resized-image" ></a> </td>
+          <td class="${dosageClass}">${suggestedServingNumber} ${suggestedServingString} <br> (Total Intake: ${suggestedDosage} mg)</td>
+          <td>${distributor}</td>
         `;
 
         tbody.appendChild(row);
@@ -154,5 +214,6 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
       table.style.display = 'table';
     }
   </script>
+</body>
 </html>
 
