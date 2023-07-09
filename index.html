@@ -202,10 +202,12 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
 
         row.innerHTML = `
           <td><a href="${url}" target="_blank">${name}</a> <br> <a href="${url}" target="_blank"><img src="${image}" alt="${name}" class="resized-image" ></a> </td>
-          <td class="${dosageClass}">${suggestedServingNumber} ${suggestedServingString} <br> (Total Intake: ${suggestedDosage} mg)</td>
+          <td class="${dosageClass}">
+            ${suggestedServingNumber !== 0 ? `${suggestedServingNumber} ${suggestedServingString} <br> (Total Intake: ${suggestedDosage} mg)` : "This product's serving size is not able to satisfy the patient's needs."}
+          </td>
           <td>${distributor}</td>
         `;
-
+        
         tbody.appendChild(row);
       }
 
