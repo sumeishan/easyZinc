@@ -3,38 +3,113 @@ layout: default
 title: easyZinc
 subtitle: Research-Based Supplementation for Pediatric IBD Patients
 ---
-
-<html> 
-  <style>
-    .red-dosage {
-      color: red;
-    }
-    .resized-image {
-      max-width: 100px;
-      max-height: 100px;
-    } 
-  </style> 
+ 
+<html>
+<head>
+    <title>easyZinc</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+        }
+        
+        .container {
+            display: flex;
+        }
+        
+        .left-half {
+            width: 50%;
+            padding: 20px;
+        }
+        
+        .right-half {
+            width: 50%;
+            padding: 20px;
+            margin-top: 60px; /* Adjust this value as needed */
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        h2 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        p {
+            font-size: 14px;
+        }
+        
+        a {
+            font-weight: bold;
+            color: black;
+            text-decoration: none;
+        }
+        
+        .supplementation-calculator {
+            width: 230px;
+            background-color: #00356B;
+            padding: 10px;
+            color: white;
+        }
+        
+        .calculator-input {
+            border: none;
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 10px;
+            background-color: lightgray;
+        }
+        
+        .references {
+            font-size: 8px;
+            width: 230px;
+            overflow-x: hidden;
+        }
+        
+        .resized-image {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
 <body>
-  <div class="Supplementation Calculator">
-    <h1>Pediatric Zinc Supplementation Dosage Calculator</h1>
-    <div class="calculator">
-      <label for="input1">Weight (lbs):</label>
-      <input type="number" id="input1">
-      <br>
-      <label for="input2">Age (years):</label>
-      <input type="number" id="input2">
-      <br>
-      <button onclick="calculate()">Calculate</button>
-      <div id="result"></div>
-      <div>
-        <h3 style="font-weight: bold;">References</h3>
-        <ol>
-          <li>American Academy of Pediatrics Committee on Nutrition. Liver disease. In: Pediatric Nutrition, 8th ed, Kleinman RE, Greer FR (Eds), American Academy of Pediatrics, 2019. p.1199.</li>
-          <li>American Academy of Pediatrics Committee on Nutrition. Trace elements. In: Pediatric Nutrition, 8th ed, Kleinman RE, Greer FR (Eds), American Academy of Pediatrics, 2019. p.591.</li>
-        </ol>
-      </div>
+    <div class="container">
+        <div class="left-half">
+            <h1>easyZinc</h1>
+            <h2>Research Based Supplementation for Pediatric IBD Patients</h2>
+            <p>Inflammatory bowel disease (IBD) is known to have a strong relationship with zinc deficiency. We are here to assist providers treating pediatric IBD patients and ensuring no one gets left behind.</p>
+            <p><a href="https://sumeishan.github.io/easyZinc/about/">Learn More</a></p>
+            <img class="resized-image" src="https://raw.githubusercontent.com/sumeishan/easyZinc/main/ucsf_logo.jpg" alt="UCSF Logo">
+        </div>
+        <div class="right-half">
+            <div class="supplementation-calculator">
+                <h1 style="font-size: 15px;">Pediatric Zinc Supplementation Dosage Calculator </h1>
+            </div>
+            <br> 
+            <div class="calculator">
+                <label for="input1">Weight (lbs):</label>
+                <input class="calculator-input" type="number" id="input1">
+                <br>
+                <label for="input2">Age (years):</label>
+                <input class="calculator-input" type="number" id="input2">
+                <br>
+                <button onclick="calculate()">Calculate</button>
+                <div id="result"></div>
+            </div>
+            <div class="references">
+                <h3 style="font-weight: bold; font-size: 8px;">References</h3>
+                <h4 style="font-weight: normal;font-size: 8px; overflow-x: hidden;">
+                    <ol>
+                        <li>American Academy of Pediatrics Committee on Nutrition. Liver disease. In: Pediatric Nutrition, 8th ed, Kleinman RE, Greer FR (Eds), American Academy of Pediatrics, 2019. p.1199.</li>
+                        <li>American Academy of Pediatrics Committee on Nutrition. Trace elements. In: Pediatric Nutrition, 8th ed, Kleinman RE, Greer FR (Eds), American Academy of Pediatrics, 2019. p.591.</li>
+                    </ol>
+                </h4>
+            </div>
+        </div>
     </div>
-  </div>
+
 
   <h2>Results</h2>
 
@@ -207,7 +282,8 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
           </td>
           <td>${distributor}</td>
         `;
-        
+
+
         tbody.appendChild(row);
       }
 
@@ -218,4 +294,3 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
   </script>
 </body>
 </html>
-
