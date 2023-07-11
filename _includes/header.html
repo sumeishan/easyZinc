@@ -7,15 +7,15 @@
         .navbar {
             display: flex;
             justify-content: flex-end;
-            align-items: flex-end; /* Added alignment to the bottom */
-            height: 50px;
-            padding-right: 20px; /* Added padding to the right */
+            align-items: flex-end;
+            height: 80px; /* Increased height for more padding */
+            padding-right: 20px;
         }
         
         .navbar ul {
             list-style-type: none;
-            margin: 0; /* Changed margin to 0 */
-            padding: 0; /* Changed padding to 0 */
+            margin: 0;
+            padding: 0;
             display: flex;
         }
         
@@ -25,8 +25,12 @@
         }
         .navbar li a{ 
             color: white;
+            padding-bottom: 10px; /* Added padding underneath the text */
         }
-         
+        
+        .navbar li:not(:last-child) a { /* Added spacing between menu items */
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
