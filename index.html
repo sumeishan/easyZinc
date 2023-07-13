@@ -163,9 +163,9 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
     // Your JavaScript code
     const dictionaryObject = {};
 
-    fetch('https://raw.githubusercontent.com/sumeishan/zinc/main/Supplement%20List%20-%20Description%20Sheet.csv')
+    fetch('https://raw.githubusercontent.com/easyZinc/main/Supplement%20List%20-%20Copy%20of%20Description%20Sheet.csv')
       .then(response => response.text())
-      .then(data => {
+      .then(data => {  
         const rows = data.split('\n').slice(1); // Remove header row
 
         console.log('Total items:', rows.length); // Display the total number of items
