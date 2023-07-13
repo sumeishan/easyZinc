@@ -79,11 +79,9 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
         <div class="left-half">
             <h1>easyZinc</h1>
             <h2>Research Based Supplementation for Pediatric IBD Patients</h2>
-            <p>Inflammatory bowel disease (IBD) is known to have a strong relationship with zinc deficiency. We are here to assist providers to streamline screening and treating pediatric IBD patients with zinc deficiencies. </p>
-            <p> <b>Disclaimer:</b> Content on this site is for reference purposes only. This site does not represent or warrant that the nutrition, ingredient, allergen and other product information on our websites are accurate or complete, since this information comes from the product manufacturers. Statements regarding dietary supplements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease or health condition. If you have specific healthcare concerns or questions about the products displayed, please contact your licensed healthcare professional for advice or answers. 
-</p>
-         <p><a href="https://sumeishan.github.io/easyZinc/about/"> Learn More About Our Research and Disclaimers </a></p>
-         
+            <p>Inflammatory bowel disease (IBD) is known to have a strong relationship with zinc deficiency. We are here to assist providers treating pediatric IBD patients and ensuring no one gets left behind.</p>
+            <p><a href="https://sumeishan.github.io/easyZinc/about/">Learn More</a></p>
+            <img class="resized-image" src="https://raw.githubusercontent.com/sumeishan/easyZinc/main/ucsf_logo.jpg" alt="UCSF Logo">
         </div>
         <div class="right-half">
             <div class="supplementation-calculator">
@@ -99,10 +97,9 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
                 <br>
                 <button onclick="calculate()">Calculate</button>
                 <div id="result"></div>
-                <br>
             </div>
             <div class="references">
-                <h3 style="font-weight: bold; font-size: 12px;">References</h3>
+                <h3 style="font-weight: bold; font-size: 8px;">References</h3>
                 <h4 style="font-weight: normal;font-size: 8px; overflow-x: hidden;">
                     <ol>
                         <li>American Academy of Pediatrics Committee on Nutrition. Liver disease. In: Pediatric Nutrition, 8th ed, Kleinman RE, Greer FR (Eds), American Academy of Pediatrics, 2019. p.1199.</li>
@@ -116,7 +113,6 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
 
   <h2>Results</h2>
 
- 
   <div id="filter-menu">
   <label>
     <input type="radio" name="filter-type" value="convenience" checked> By Convenience
@@ -146,6 +142,7 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
   </label>
 </div>
 
+
   <table style="display: none;"> <!-- Hide the table by default -->
     <thead>
       <tr>
@@ -161,46 +158,72 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
   
   <script>
     // Your JavaScript code
-const dictionaryObject = {};
+    const dictionaryObject = {};
 
-fetch('https://raw.githubusercontent.com/sumeishan/easyZinc/main/Supplement%20List%20-%20Copy%20of%20Description%20Sheet.csv')
-  .then(response => response.text())
-  .then(data => {
-    const rows = data.split('\n').slice(1); // Remove header row
+    fetch('https://raw.githubusercontent.com/sumeishan/easyZinc/main/Supplement%20List%20-%20Copy%20of%20Description%20Sheet.csv')
+      .then(response => response.text())
+      .then(data => {
+        const rows = data.split('\n').slice(1); // Remove header row
 
-    console.log('Total items:', rows.length); // Display the total number of items
+        console.log('Total items:', rows.length); // Display the total number of items
 
-    rows.forEach(row => {
-      const [distributor, name, url, origDosage, perMeasure, measure, dosagePerMeasure, image] = row.split(',');
+        rows.forEach(row => {
+          const [distributor, name, url, origDosage, perMeasure, measure, dosagePerMeasure, image] = row.split(',');
 
-      if (!dictionaryObject[dosagePerMeasure]) {
-        dictionaryObject[dosagePerMeasure] = []; // Create an empty array if it doesn't exist
-      }
+          if (!dictionaryObject[dosagePerMeasure]) {
+            dictionaryObject[dosagePerMeasure] = []; // Create an empty array if it doesn't exist
+          }
 
-      dictionaryObject[dosagePerMeasure].push({
-        distributor: distributor,
-        name: name,
-        url: url,
-        origDosage: origDosage,
-        perMeasure: perMeasure,
-        measure: measure,
-        dosagePerMeasure: dosagePerMeasure,
-        image: image,
-        suggested: perMeasure
+          dictionaryObject[dosagePerMeasure].push({
+            distributor: distributor,
+            name: name,
+            url: url,
+            origDosage: origDosage,
+            perMeasure: perMeasure,
+            measure: measure,
+            dosagePerMeasure: dosagePerMeasure,
+            image: image,
+            suggested: perMeasure
+          });
+        });
+
+        console.log('Dictionary object:', dictionaryObject);
+      })
+      .catch(error => {
+        console.error('Error fetching CSV:', error);
       });
-    });
 
-    console.log('Dictionary object:', dictionaryObject);
-  })
-  .catch(error => {
-    console.error('Error fetching CSV:', error);
-  });
 
-// Function to calculate the number of measures and determine the appropriate measure word
-function getNumberOfMeasures(first_value, dpm) { 
-  const dividend = Math.floor(first_value / dpm);
-  return dividend;
-}
+    // Function to calculate the number of measures and determine the appropriate measure word
+    // function getNumberOfMeasures(first_value, dpm) { 
+    //   const dividend = Math.floor(first_value / dpm);
+    //   return dividend;
+    // }
+
+    // function getNumberOfMeasures(x, y) {
+    //   var lowerBound = Math.floor(y / x) * x;
+    //   var upperBound = lowerBound + x;
+      
+    //   if (y - lowerBound <= upperBound - y) {
+    //     return lowerBound / x;
+    //   } else {
+    //     return upperBound / x;
+    //   }
+    // }
+
+    function getNumberOfMeasures(x, y) {
+      const quotient = Math.floor(y / x);  // Calculate the integer quotient of y divided by x
+      const lowerMultiple = x * quotient;  // Calculate the lower multiple of x
+      const upperMultiple = x * (quotient + 1);  // Calculate the upper multiple of x
+
+      // Determine which multiple is closest to y with a difference of 5
+      if (Math.abs(y - lowerMultiple) < Math.abs(y - upperMultiple)) {
+        return quotient;
+      } else {
+        return quotient + 1;
+      }
+    }
+
 
 
     // Array of measure word pairs [singular, plural] 
@@ -254,10 +277,17 @@ function getNumberOfMeasures(first_value, dpm) {
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = '';
 
+      // Retrieve the selected filter options
+      const filterType = document.querySelector('input[name="filter-type"]:checked').value;
+      const onlyPills = document.querySelector('input[name="pill-filter"]').checked;
+      const onlyGummies = document.querySelector('input[name="gummy-filter"]').checked;
+      const onlySprays = document.querySelector('input[name="spray-filter"]').checked;
+      const selectedDistributor = document.querySelector('select[name="distributor-filter"]').value;
+
       // Update suggestedDosage in dictionaryObject and create an array of objects
       const objects = [];
       for (const dosage in dictionaryObject) {
-        const dosageObjects = dictionaryObject[dosage]; // Retrieve the array of objects for the current dosagePerMeasure
+        const dosageObjects = dictionaryObject[dosage];
 
         for (const obj of dosageObjects) {
           const { distributor, name, url, origDosage, perMeasure, measure, dosagePerMeasure, image, suggested } = obj;
@@ -266,56 +296,68 @@ function getNumberOfMeasures(first_value, dpm) {
           const suggestedDosage = calculateTotalDosage(suggestedServingNumber, dosagePerMeasure);
           const originalSuggestedServing = `${origDosage} mg for every ${perMeasure} ${measure}`;
 
-          obj.suggested = suggestedServingNumber; // Update the suggested property of the current object
-          
-          objects.push({
-            dosage,
-            distributor,
-            name,
-            url,
-            measure,
-            origDosage,
-            perMeasure,
-            image,
-            suggested,
-            suggestedServingNumber,
-            suggestedServingString,
-            suggestedDosage,
-            originalSuggestedServing
-          });
-        } // Missing closing brace for the inner for loop
-      } // Closing brace for the outer for loop
+          obj.suggested = suggestedServingNumber;
+
+          // Apply filter options to include or exclude products
+          if (
+            (filterType === 'convenience' && suggestedServingNumber !== 0 && suggestedServingNumber <= 3) ||
+            (filterType === 'amount' && suggestedDosage >= recommended_dose) ||
+            (!onlyPills && !onlyGummies && !onlySprays) ||
+            (onlyPills && (measure.toLowerCase() === 'capsule' || measure.toLowerCase() === 'tablets')) ||
+            (onlyGummies && measure.toLowerCase() === 'gummy') ||
+            (onlySprays && measure.toLowerCase() === 'spray')
+          ) {
+            if (selectedDistributor !== '' && selectedDistributor !== 'All Distributors') {
+              if (distributor === selectedDistributor) {
+                continue;
+              }
+            }
+
+            objects.push({
+              dosage,
+              distributor,
+              name,
+              url,
+              measure,
+              origDosage,
+              perMeasure,
+              image,
+              suggested,
+              suggestedServingNumber,
+              suggestedServingString,
+              suggestedDosage,
+              originalSuggestedServing
+            });
+          }
+        }
+      }
 
       // Sort the objects based on the suggestedDosage
       objects.sort((a, b) => {
         const suggestedDosageA = parseFloat(a.suggestedServingNumber);
         const suggestedDosageB = parseFloat(b.suggestedServingNumber);
 
-        if (suggestedDosageA === 0) return 1; // Place 0 dosage at the end
-        if (suggestedDosageB === 0) return -1; // Place 0 dosage at the end
+        if (suggestedDosageA === 0) return 1;
+        if (suggestedDosageB === 0) return -1;
 
         return suggestedDosageA - suggestedDosageB;
       });
 
       // Generate new table rows
-      console.log("Length of objects:", objects.length);
-
       for (const obj of objects) {
         const { dosage, distributor, name, url, measure, origDosage, perMeasure, image, suggested, suggestedServingNumber, suggestedServingString, suggestedDosage, originalSuggestedServing } = obj;
 
         const row = document.createElement('tr');
 
-        // If suggestedDosage is 0, add a CSS class to color the cell red
         const dosageClass = suggestedServingNumber === 0 ? 'red-dosage' : '';
 
         row.innerHTML = `
           <td><a href="${url}" target="_blank">${name}</a> <br> <a href="${url}" target="_blank"><img src="${image}" alt="${name}" class="resized-image" ></a> </td>
           <td class="${dosageClass}">
-            ${suggestedServingNumber !== 0 && suggestedServingNumber < 4 ? `${suggestedServingNumber} ${suggestedServingString} <br> (Total Intake: ${suggestedDosage} mg)` : "This product's serving size is not able to satisfy the patient's needs."}
+            ${suggestedServingNumber !== 0 && suggestedServingNumber <= 3 ? `${suggestedServingNumber} ${suggestedServingString} <br> (Total Intake: ${suggestedDosage} mg)` : "This product's serving size is not able to satisfy the patient's needs."}
           </td>
           <td>${distributor}</td>
         `;
-
 
         tbody.appendChild(row);
       }
@@ -324,6 +366,9 @@ function getNumberOfMeasures(first_value, dpm) {
       var table = document.querySelector('table');
       table.style.display = 'table';
     }
+
+
+
   </script>
 </body>
 </html>
