@@ -116,6 +116,36 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
 
   <h2>Results</h2>
 
+ 
+  <div id="filter-menu">
+  <label>
+    <input type="radio" name="filter-type" value="convenience" checked> By Convenience
+  </label>
+  <label>
+    <input type="radio" name="filter-type" value="amount"> By Amount
+  </label>
+
+  <label>
+    <input type="checkbox" name="pill-filter"> Only Pills
+  </label>
+  <label>
+    <input type="checkbox" name="gummy-filter"> Only Gummies
+  </label>
+  <label>
+    <input type="checkbox" name="spray-filter"> Only Sprays
+  </label>
+
+  <label>
+    <select name="distributor-filter">
+      <option value="">All Distributors</option>
+      <option value="amazon">Amazon</option>
+      <option value="target">Target</option>
+      <option value="walgreens">Walgreens</option>
+      <option value="cvs">CVS</option>
+    </select>
+  </label>
+</div>
+
   <table style="display: none;"> <!-- Hide the table by default -->
     <thead>
       <tr>
