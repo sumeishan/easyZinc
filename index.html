@@ -72,6 +72,13 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
             max-width: 100px;
             max-height: 100px;
         }
+        .column-1 {
+          width: 50%;
+        }
+
+        .column-2 {
+          width: 25%;
+        }
     </style>
 </head>
 <body>
@@ -79,9 +86,21 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
         <div class="left-half">
             <h1>easyZinc</h1>
             <h2>Research Based Supplementation for Pediatric IBD Patients</h2>
-            <p>Inflammatory bowel disease (IBD) is known to have a strong relationship with zinc deficiency. We are here to assist providers treating pediatric IBD patients and ensuring no one gets left behind.</p>
-            <p><a href="https://sumeishan.github.io/easyZinc/about/">Learn More</a></p>
-            <img class="resized-image" src="https://raw.githubusercontent.com/sumeishan/easyZinc/main/ucsf_logo.jpg" alt="UCSF Logo">
+            <p>Inflammatory bowel disease (IBD) is known to have a strong relationship with zinc deficiency. We are here to assist providers to streamline screening and treating pediatric IBD patients with zinc deficiencies. </p>
+
+            <p> <b>Early Diagnosis Disclaimer: </b> Information regarding dosaging is not tailored for early diagnosis, where dosage amounts will vary depending on severity.
+            </p>  
+
+            <p>
+            <a href="https://sumeishan.github.io/easyZinc/about/"> Learn More About The Research Behind Our Dosage Recommendations </a> 
+            </p> 
+
+            <p>
+            <b> General Reference Disclaimer:</b> Content on this site is for reference purposes only. This site does not represent or warrant that the nutrition, ingredient, allergen and other product information on our websites are accurate or complete, since this information comes from the product manufacturers. Statements regarding dietary supplements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease or health condition. <u>If you have specific healthcare concerns or questions about the products displayed, please contact your licensed healthcare professional for advice or answers. </u>
+            </p> 
+
+         <p><a href="https://sumeishan.github.io/easyZinc/about/"> Read Our Disclaimers </a></p>
+
         </div>
         <div class="right-half">
             <div class="supplementation-calculator">
@@ -110,6 +129,9 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
         </div>
     </div>
 
+    <p>
+    <a href="https://www.amazon.com/Vimergy-Organic-Liquid-Zinc-Trial/dp/B0BSLXQV9X?keywords=zinc+supplements&qid=1689442625&sr=8-2-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1&linkCode=li2&tag=zincucsf-20&linkId=52b01e515dd8086497a8b658fc2d6501&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0BSLXQV9X&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=zincucsf-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=zincucsf-20&language=en_US&l=li2&o=1&a=B0BSLXQV9X" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+  </p>
 
   <h2>Results</h2>
 
@@ -125,6 +147,9 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
     <input type="checkbox" name="pill-filter"> Only Pills
   </label>
   <label>
+    <input type="checkbox" name="tablet-filter"> Only Tablets
+  </label>
+  <label>
     <input type="checkbox" name="gummy-filter"> Only Gummies
   </label>
   <label>
@@ -134,27 +159,29 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
   <label>
     <select name="distributor-filter">
       <option value="">All Distributors</option>
-      <option value="amazon">Amazon</option>
-      <option value="target">Target</option>
-      <option value="walgreens">Walgreens</option>
-      <option value="cvs">CVS</option>
+      <option value="Amazon">Amazon</option>
+      <option value="Target">Target</option>
+      <option value="Walgreens">Walgreens</option>
+      <option value="CVS">CVS</option>
     </select>
   </label>
 </div>
 
 
-  <table style="display: none;"> <!-- Hide the table by default -->
-    <thead>
-      <tr>
-        <th> Product </th>
-        <th>Suggested Dosage</th>
-        <th> Distributor </th>
-      </tr>
-    </thead>
-    <tbody id="table-body"> <!-- Added an id attribute -->
-      <!-- JavaScript code will generate rows here -->
-    </tbody>
-  </table>
+  <table style="display: none; table-layout: fixed;"> <!-- Hide the table by default and apply fixed layout -->
+  <thead>
+    <tr>
+      <th class="column-1">Product</th>
+      <th class="column-2">Suggested Dosage</th>
+      <th class="column-2">Price</th>
+      <th class="column-2">Distributor</th>
+    </tr>
+  </thead>
+  <tbody id="table-body"> <!-- Added an id attribute -->
+    <!-- JavaScript code will generate rows here -->
+  </tbody>
+</table>
+
   
   <script>
     // Your JavaScript code
@@ -194,23 +221,6 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
       });
 
 
-    // Function to calculate the number of measures and determine the appropriate measure word
-    // function getNumberOfMeasures(first_value, dpm) { 
-    //   const dividend = Math.floor(first_value / dpm);
-    //   return dividend;
-    // }
-
-    // function getNumberOfMeasures(x, y) {
-    //   var lowerBound = Math.floor(y / x) * x;
-    //   var upperBound = lowerBound + x;
-      
-    //   if (y - lowerBound <= upperBound - y) {
-    //     return lowerBound / x;
-    //   } else {
-    //     return upperBound / x;
-    //   }
-    // }
-
     function getNumberOfMeasures(x, y) {
       const quotient = Math.floor(y / x);  // Calculate the integer quotient of y divided by x
       const lowerMultiple = x * quotient;  // Calculate the lower multiple of x
@@ -223,8 +233,6 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
         return quotient + 1;
       }
     }
-
-
 
     // Array of measure word pairs [singular, plural] 
     const measureWordPairs = [
@@ -277,12 +285,19 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = '';
 
-      // Retrieve the selected filter options
       const filterType = document.querySelector('input[name="filter-type"]:checked').value;
       const onlyPills = document.querySelector('input[name="pill-filter"]').checked;
+      const onlyTablets = document.querySelector('input[name="tablet-filter"]').checked;
       const onlyGummies = document.querySelector('input[name="gummy-filter"]').checked;
       const onlySprays = document.querySelector('input[name="spray-filter"]').checked;
       const selectedDistributor = document.querySelector('select[name="distributor-filter"]').value;
+
+      const measureDictionary = {
+        "pill": ['capsule', 'caplet'],
+        "tablet": ['tablet', 'caplet'],
+        "spray": ['drop', 'spray'],
+        "gummy": ['gummy', 'lozenge'],
+      };
 
       // Update suggestedDosage in dictionaryObject and create an array of objects
       const objects = [];
@@ -291,27 +306,65 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
 
         for (const obj of dosageObjects) {
           const { distributor, name, url, origDosage, perMeasure, measure, dosagePerMeasure, image, suggested } = obj;
-          const suggestedServingNumber = getNumberOfMeasures(recommended_dose, dosagePerMeasure);
+          const suggestedServingNumber = getNumberOfMeasures(dosagePerMeasure, recommended_dose);
           const suggestedServingString = suggestedServingNumber === 1 ? getMeasureSingular(measure) : getMeasurePlural(measure);
           const suggestedDosage = calculateTotalDosage(suggestedServingNumber, dosagePerMeasure);
           const originalSuggestedServing = `${origDosage} mg for every ${perMeasure} ${measure}`;
 
           obj.suggested = suggestedServingNumber;
 
+          // console.log("Here's suggestedDosage: "); 
+          // console.log(suggestedDosage); 
+          // console.log("Here's what it's supposed to recommend: "); 
+          // console.log(recommended_dose)
+          const difference = Math.floor(10 * Math.abs(suggestedDosage - recommended_dose)) / 10;
+          // console.log("here's the difference: "); 
+          // console.log(difference); 
+
           // Apply filter options to include or exclude products
+          if (suggestedServingNumber == 0 || suggestedServingNumber > 3) {
+            console.log(suggestedServingNumber); 
+            console.log("Here's serving size, should be less than 3"); 
+            continue;
+          }
+
+          let isTypeFiltered = false;
+          let isDistributorFiltered = false;
+
+          // Check if any of the checkboxes are checked and the measure matches 
+
           if (
-            (filterType === 'convenience' && suggestedServingNumber !== 0 && suggestedServingNumber <= 3) ||
-            (filterType === 'amount' && suggestedDosage >= recommended_dose) ||
-            (!onlyPills && !onlyGummies && !onlySprays) ||
-            (onlyPills && (measure.toLowerCase() === 'capsule' || measure.toLowerCase() === 'tablets')) ||
-            (onlyGummies && measure.toLowerCase() === 'gummy') ||
-            (onlySprays && measure.toLowerCase() === 'spray')
+            (onlyPills && measureDictionary["pill"].includes(measure.toLowerCase())) ||
+            (onlyTablets && measureDictionary["tablet"].includes(measure.toLowerCase())) ||
+            (onlyGummies && measureDictionary["gummy"].includes(measure.toLowerCase())) ||
+            (onlySprays && measureDictionary["spray"].includes(measure.toLowerCase()))
           ) {
-            if (selectedDistributor !== '' && selectedDistributor !== 'All Distributors') {
-              if (distributor === selectedDistributor) {
-                continue;
-              }
+            isTypeFiltered = true;
+          }
+
+          // Check if no checkboxes are checked --> we can assume we want all
+          if (!onlyPills && !onlyTablets && !onlyGummies && !onlySprays) {
+            isTypeFiltered = true;
+          }
+
+          // Apply distributor filter
+          const distributorList = ["Amazon", "CVS", "Walgreens", "Target"]
+
+          if (selectedDistributor !== '') {
+            if (distributor == selectedDistributor) {
+              isDistributorFiltered = true;
             }
+          }
+
+          if (selectedDistributor == '') {
+            isDistributorFiltered = true;
+          }
+
+          // console.log(isTypeFiltered); 
+          // console.log(isDistributorFiltered); 
+          if (isTypeFiltered && isDistributorFiltered) {
+
+            console.log("Pushed!");
 
             objects.push({
               dosage,
@@ -326,22 +379,35 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
               suggestedServingNumber,
               suggestedServingString,
               suggestedDosage,
-              originalSuggestedServing
+              originalSuggestedServing,
+              difference
             });
           }
         }
       }
 
-      // Sort the objects based on the suggestedDosage
-      objects.sort((a, b) => {
-        const suggestedDosageA = parseFloat(a.suggestedServingNumber);
-        const suggestedDosageB = parseFloat(b.suggestedServingNumber);
 
-        if (suggestedDosageA === 0) return 1;
-        if (suggestedDosageB === 0) return -1;
+      // Sort the objects based on the filter type
+      if (filterType === 'convenience') {
+        console.log("Here's convenience!");
+        objects.sort((a, b) => {
+          const suggestedDosageA = parseFloat(a.suggestedServingNumber);
+          const suggestedDosageB = parseFloat(b.suggestedServingNumber);
 
-        return suggestedDosageA - suggestedDosageB;
-      });
+          if (suggestedDosageA === 0) return 1;
+          if (suggestedDosageB === 0) return -1;
+
+          return suggestedDosageA - suggestedDosageB;
+        });
+      } else if (filterType === 'amount') {
+        console.log("Here's amount!");
+        objects.sort((a, b) => {
+          const differenceA = parseFloat(a.difference);
+          const differenceB = parseFloat(b.difference);
+
+          return differenceA - differenceB;
+        });
+      }
 
       // Generate new table rows
       for (const obj of objects) {
@@ -350,12 +416,18 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
         const row = document.createElement('tr');
 
         const dosageClass = suggestedServingNumber === 0 ? 'red-dosage' : '';
+        // console.log("Making table. suggestedServingNumber: "); 
+        // console.log(suggestedServingNumber); 
+        // console.log("Original"); 
+        // console.log(perMeasure); 
+        // console.log(originalSuggestedServing); 
 
         row.innerHTML = `
           <td><a href="${url}" target="_blank">${name}</a> <br> <a href="${url}" target="_blank"><img src="${image}" alt="${name}" class="resized-image" ></a> </td>
           <td class="${dosageClass}">
-            ${suggestedServingNumber !== 0 && suggestedServingNumber <= 3 ? `${suggestedServingNumber} ${suggestedServingString} <br> (Total Intake: ${suggestedDosage} mg)` : "This product's serving size is not able to satisfy the patient's needs."}
+            ${suggestedServingNumber} ${suggestedServingString} <br> (Total Intake: ${suggestedDosage} mg) 
           </td>
+          </td> {price} </td>
           <td>${distributor}</td>
         `;
 
@@ -366,8 +438,6 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
       var table = document.querySelector('table');
       table.style.display = 'table';
     }
-
-
 
   </script>
 </body>
