@@ -129,8 +129,7 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
         </div>
     </div>
 
-    <p>
-    <iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ss&ref=as_ss_li_til&ad_type=product_link&tracking_id=zincucsf-20&language=en_US&marketplace=amazon&region=US&placement=B0BSLXQV9X&asins=B0BSLXQV9X&linkId=7af1616d20d5d41cbe608793f3ca0a0d&show_border=true&link_opens_in_new_window=true"></iframe>  </p>
+     
 
   <h2>Results</h2>
 
@@ -140,6 +139,9 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
   </label>
   <label>
     <input type="radio" name="filter-type" value="amount"> By Amount
+  </label>
+  <label>
+    <input type="radio" name="filter-type" value="price"> By Price
   </label>
 
   <label>
@@ -183,42 +185,41 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
 
   
   <script>
-    // Your JavaScript code
     const dictionaryObject = {};
 
-    fetch('https://raw.githubusercontent.com/sumeishan/easyZinc/main/Supplement%20List%20-%20Copy%20of%20Description%20Sheet.csv')
-      .then(response => response.text())
-      .then(data => {
-        const rows = data.split('\n').slice(1); // Remove header row
+    fetch('https://raw.githubusercontent.com/sumeishan/easyZinc/main/Supplement%20List%20-%20Description%20Sheet.csv')
+        .then(response => response.text())
+        .then(data => {
+            const rows = data.split('\n').slice(1); // Remove header row
 
-        console.log('Total items:', rows.length); // Display the total number of items
+            console.log('Total items:', rows.length); // Display the total number of items
 
-        rows.forEach(row => {
-          const [distributor, name, url, origDosage, perMeasure, measure, dosagePerMeasure, image] = row.split(',');
+            rows.forEach(row => {
+                const [distributor, name, price, url, origDosage, perMeasure, measure, dosagePerMeasure, image] = row.split(',');
 
-          if (!dictionaryObject[dosagePerMeasure]) {
-            dictionaryObject[dosagePerMeasure] = []; // Create an empty array if it doesn't exist
-          }
+                if (!dictionaryObject[dosagePerMeasure]) {
+                    dictionaryObject[dosagePerMeasure] = []; // Create an empty array if it doesn't exist
+                }
 
-          dictionaryObject[dosagePerMeasure].push({
-            distributor: distributor,
-            name: name,
-            url: url,
-            origDosage: origDosage,
-            perMeasure: perMeasure,
-            measure: measure,
-            dosagePerMeasure: dosagePerMeasure,
-            image: image,
-            suggested: perMeasure
-          });
-        });
+                dictionaryObject[dosagePerMeasure].push({
+                    distributor: distributor,
+                    name: name,
+                    price: price,
+                    url: url,
+                    origDosage: origDosage,
+                    perMeasure: perMeasure,
+                    measure: measure,
+                    dosagePerMeasure: dosagePerMeasure,
+                    image: image,
+                    suggested: perMeasure
+                });
+            });
 
-        console.log('Dictionary object:', dictionaryObject);
+            console.log('Dictionary object:', dictionaryObject);
       })
       .catch(error => {
         console.error('Error fetching CSV:', error);
       });
-
 
     function getNumberOfMeasures(x, y) {
       const quotient = Math.floor(y / x);  // Calculate the integer quotient of y divided by x
@@ -278,7 +279,7 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
       var value2 = parseInt(document.getElementById("input2").value);
       var { n: recommended_dose, duration: recommended_duration } = calculate_supplementation(value1);
       var resultDiv = document.getElementById("result");
-      resultDiv.innerHTML = "Recommended Dosage: " + recommended_dose + " mg per day" + "<br>Recommended Duration: " + recommended_duration;
+      resultDiv.innerHTML = "Recommended Dosage: " + recommended_dose + " mg per day" + "<br>Recommended Duration: " + recommended_duration; 
 
       // Clear existing table rows
       const tbody = document.getElementById('table-body');
@@ -292,35 +293,28 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
       const selectedDistributor = document.querySelector('select[name="distributor-filter"]').value;
 
       const measureDictionary = {
-        "pill": ['capsule', 'caplet'],
-        "tablet": ['tablet', 'caplet'],
-        "spray": ['drop', 'spray'],
-        "gummy": ['gummy', 'lozenge'],
+          "pill": ['capsule', 'caplet'],
+          "tablet": ['tablet', 'caplet'],
+          "spray": ['drop', 'spray'],
+          "gummy": ['gummy', 'lozenge'],
       };
 
       // Update suggestedDosage in dictionaryObject and create an array of objects
       const objects = [];
       for (const dosage in dictionaryObject) {
-        const dosageObjects = dictionaryObject[dosage];
+          const dosageObjects = dictionaryObject[dosage];
 
-        for (const obj of dosageObjects) {
-          const { distributor, name, url, origDosage, perMeasure, measure, dosagePerMeasure, image, suggested } = obj;
-          const suggestedServingNumber = getNumberOfMeasures(dosagePerMeasure, recommended_dose);
-          const suggestedServingString = suggestedServingNumber === 1 ? getMeasureSingular(measure) : getMeasurePlural(measure);
-          const suggestedDosage = calculateTotalDosage(suggestedServingNumber, dosagePerMeasure);
-          const originalSuggestedServing = `${origDosage} mg for every ${perMeasure} ${measure}`;
+          for (const obj of dosageObjects) {
+              const { distributor, name, price, url, origDosage, perMeasure, measure, dosagePerMeasure, image, suggested } = obj;
+              const suggestedServingNumber = getNumberOfMeasures(dosagePerMeasure, recommended_dose);
+              const suggestedServingString = suggestedServingNumber === 1 ? getMeasureSingular(measure) : getMeasurePlural(measure);
+              const suggestedDosage = calculateTotalDosage(suggestedServingNumber, dosagePerMeasure);
+              const originalSuggestedServing = `${origDosage} mg for every ${perMeasure} ${measure}`;
 
-          obj.suggested = suggestedServingNumber;
-
-          // console.log("Here's suggestedDosage: "); 
-          // console.log(suggestedDosage); 
-          // console.log("Here's what it's supposed to recommend: "); 
-          // console.log(recommended_dose)
+              obj.suggested = suggestedServingNumber;
+ 
           const difference = Math.floor(10 * Math.abs(suggestedDosage - recommended_dose)) / 10;
-          // console.log("here's the difference: "); 
-          // console.log(difference); 
 
-          // Apply filter options to include or exclude products
           if (suggestedServingNumber == 0 || suggestedServingNumber > 3) {
             console.log(suggestedServingNumber); 
             console.log("Here's serving size, should be less than 3"); 
@@ -358,17 +352,66 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
           if (selectedDistributor == '') {
             isDistributorFiltered = true;
           }
-
-          // console.log(isTypeFiltered); 
-          // console.log(isDistributorFiltered); 
+ 
           if (isTypeFiltered && isDistributorFiltered) {
+                console.log("Pushed!");
 
-            console.log("Pushed!");
+                objects.push({
+                    dosage,
+                    distributor,
+                    name,
+                    price,
+                    url,
+                    measure,
+                    origDosage,
+                    perMeasure,
+                    image,
+                    suggested,
+                    suggestedServingNumber,
+                    suggestedServingString,
+                    suggestedDosage,
+                    originalSuggestedServing,
+                    difference
+                });
+            }
+        }
+    }
 
-            objects.push({
-              dosage,
-              distributor,
-              name,
+    // Sort the objects based on the filter type
+    if (filterType === 'convenience') {
+        console.log("Here's convenience!");
+        objects.sort((a, b) => {
+            const suggestedDosageA = parseFloat(a.suggestedServingNumber);
+            const suggestedDosageB = parseFloat(b.suggestedServingNumber);
+
+            if (suggestedDosageA === 0) return 1;
+            if (suggestedDosageB === 0) return -1;
+
+            return suggestedDosageA - suggestedDosageB;
+        });
+    } else if (filterType === 'amount') {
+        console.log("Here's amount!");
+        objects.sort((a, b) => {
+            const differenceA = parseFloat(a.difference);
+            const differenceB = parseFloat(b.difference); 
+            return differenceA - differenceB;
+        });
+    } else if (filterType === 'price') {
+        console.log("Here's price!");
+        objects.sort((a, b) => {
+            const priceA = parseFloat(a.price);
+            const priceB = parseFloat(b.price); 
+            return priceA - priceB;
+        });
+    }
+
+
+    // Generate new table rows
+    for (const obj of objects) {    
+        const {dosage,
+              distributor, 
+              name, 
+              price,
               url,
               measure,
               origDosage,
@@ -379,38 +422,7 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
               suggestedServingString,
               suggestedDosage,
               originalSuggestedServing,
-              difference
-            });
-          }
-        }
-      }
-
-
-      // Sort the objects based on the filter type
-      if (filterType === 'convenience') {
-        console.log("Here's convenience!");
-        objects.sort((a, b) => {
-          const suggestedDosageA = parseFloat(a.suggestedServingNumber);
-          const suggestedDosageB = parseFloat(b.suggestedServingNumber);
-
-          if (suggestedDosageA === 0) return 1;
-          if (suggestedDosageB === 0) return -1;
-
-          return suggestedDosageA - suggestedDosageB;
-        });
-      } else if (filterType === 'amount') {
-        console.log("Here's amount!");
-        objects.sort((a, b) => {
-          const differenceA = parseFloat(a.difference);
-          const differenceB = parseFloat(b.difference);
-
-          return differenceA - differenceB;
-        });
-      }
-
-      // Generate new table rows
-      for (const obj of objects) {
-        const { dosage, distributor, name, url, measure, origDosage, perMeasure, image, suggested, suggestedServingNumber, suggestedServingString, suggestedDosage, originalSuggestedServing } = obj;
+              difference} = obj;
 
         const row = document.createElement('tr');
 
@@ -422,18 +434,23 @@ subtitle: Research-Based Supplementation for Pediatric IBD Patients
         // console.log(originalSuggestedServing); 
 
         row.innerHTML = `
-          <td><a href="${url}" target="_blank">${name}</a> <br> <a href="${url}" target="_blank"><img src="${image}" alt="${name}" class="resized-image" ></a> </td>
-          <td class="${dosageClass}">
-            ${suggestedServingNumber} ${suggestedServingString} <br> (Total Intake: ${suggestedDosage} mg) 
+          <td>
+            <a href="${url}" target="_blank">${name}</a> <br>
+            <a href="${url}" target="_blank"><img src="${image}" alt="${name}" class="resized-image"></a>
           </td>
-          </td> {price} </td>
+          <td class="${dosageClass}">
+            ${suggestedServingNumber} ${suggestedServingString} <br>
+            (Total Intake: ${suggestedDosage} mg) 
+          </td>
+          <td style="text-align: center;">${price}</td>
           <td>${distributor}</td>
         `;
+
 
         tbody.appendChild(row);
       }
 
-      // Show the results table
+    // Show the results table
       var table = document.querySelector('table');
       table.style.display = 'table';
     }
